@@ -1,5 +1,7 @@
 require "bundler/setup"
 require "tedium"
+require "tedium/cli"
+require "tedium/runner"
 require "tempfile"
 require "yaml"
 

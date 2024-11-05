@@ -1,5 +1,6 @@
 require 'yaml'
 require 'pathname'
+require 'open3'
 require_relative 'tedium/cli'
 
 module Tedium
@@ -72,15 +73,22 @@ module Tedium
                     end
 
       command = if is_standard
-                  "bundle exec standardrb #{unsafe_flag} #{file_path}" # Changed from standard to standardrb
+                  ['bundle', 'exec', 'standardrb', unsafe_flag, file_path]
                 else
-                  "bundle exec rubocop #{unsafe_flag} #{file_path}"
+                  ['bundle', 'exec', 'rubocop', unsafe_flag, file_path]
                 end
 
-      puts "\nRunning: #{command}"
-      result = system(command)
+      puts "\nRunning: #{command.join(' ')}"
 
-      if result
+      stdout, stderr, status = Open3.capture3(*command)
+
+      # Filter out the ignored files warning but keep other stderr messages
+      filtered_stderr = stderr.lines.reject { |line| line.include?('Ignored files:') }.join
+
+      # Print any remaining stderr messages that might be important
+      puts filtered_stderr unless filtered_stderr.empty?
+
+      if status.success?
         puts "\nLinting completed successfully!"
         if @options[:unsafe_autocorrect]
           puts 'WARNING: Unsafe autocorrections were allowed. Please review changes carefully.'
@@ -89,7 +97,11 @@ module Tedium
       else
         puts "\nLinting completed with some errors."
         puts 'Some issues may require manual intervention.'
+        # Show stdout in case of errors, as it might contain useful information
+        puts stdout unless stdout.empty?
       end
+
+      status.success?
     end
 
     def run_tests

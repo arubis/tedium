@@ -17,7 +17,6 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
-  config.shared_context_modules_order = :random
   config.filter_run_when_matching :focus
   config.example_status_persistence_file_path = "spec/examples.txt"
   config.disable_monkey_patching!

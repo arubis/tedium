@@ -1,3 +1,5 @@
+require 'open3'
+
 module Tedium
   class Runner
     TODO_FILES = [

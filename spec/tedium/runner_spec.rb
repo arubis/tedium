@@ -28,7 +28,7 @@ RSpec.describe Tedium::Runner do
 
       it "runs standardrb on the selected file" do
         success_result = instance_double(Process::Status, success?: true)
-        allow(Open3).to receive(:capture3).with(
+        expect(Open3).to receive(:capture3).with(
           "bundle", "exec", "standardrb", "--fix", kind_of(String)
         ).and_return(["", "", success_result])
 
@@ -40,7 +40,7 @@ RSpec.describe Tedium::Runner do
 
         it "uses the unsafe fix flag" do
           success_result = instance_double(Process::Status, success?: true)
-          allow(Open3).to receive(:capture3).with(
+          expect(Open3).to receive(:capture3).with(
             "bundle", "exec", "standardrb", "--fix-unsafely", kind_of(String)
           ).and_return(["", "", success_result])
 
@@ -66,7 +66,7 @@ RSpec.describe Tedium::Runner do
         end
 
         it "deletes the todo file" do
-          allow(File).to receive(:delete).with(".standard_todo.yml")
+          expect(File).to receive(:delete).with(".standard_todo.yml")
           runner.run
         end
       end
@@ -81,7 +81,7 @@ RSpec.describe Tedium::Runner do
 
       it "runs rubocop on the selected file" do
         success_result = instance_double(Process::Status, success?: true)
-        allow(Open3).to receive(:capture3).with(
+        expect(Open3).to receive(:capture3).with(
           "bundle", "exec", "rubocop", "-a", kind_of(String)
         ).and_return(["", "", success_result])
 
@@ -93,7 +93,7 @@ RSpec.describe Tedium::Runner do
 
         it "uses the unsafe autocorrect flag" do
           success_result = instance_double(Process::Status, success?: true)
-          allow(Open3).to receive(:capture3).with(
+          expect(Open3).to receive(:capture3).with(
             "bundle", "exec", "rubocop", "-A", kind_of(String)
           ).and_return(["", "", success_result])
 
@@ -112,7 +112,7 @@ RSpec.describe Tedium::Runner do
       end
 
       it "runs the test suite after linting" do
-        allow(runner).to receive(:system).with("bundle exec rake test")
+        expect(runner).to receive(:system).with("bundle exec rake test")
         runner.run
       end
     end

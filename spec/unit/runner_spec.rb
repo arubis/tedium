@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe Tedium::Runner do
   let(:runner) { described_class.new(options) }
@@ -19,8 +19,8 @@ RSpec.describe Tedium::Runner do
       let(:todo_file) { create_standard_todo_file(standard_todo_content) }
 
       before do
-        allow(File).to receive(:exist?).with('.standard_todo.yml').and_return(true)
-        allow(File).to receive(:exist?).with('.rubocop_todo.yml').and_return(false)
+        allow(File).to receive(:exist?).with(".standard_todo.yml").and_return(true)
+        allow(File).to receive(:exist?).with(".rubocop_todo.yml").and_return(false)
         allow(YAML).to receive(:load_file).and_return(standard_todo_content)
       end
 
@@ -35,7 +35,7 @@ RSpec.describe Tedium::Runner do
       end
 
       context "with unsafe autocorrect" do
-        let(:options) { { unsafe_autocorrect: true } }
+        let(:options) { {unsafe_autocorrect: true} }
 
         it "uses the unsafe fix flag" do
           expect(Open3).to receive(:capture3).with(
@@ -64,7 +64,7 @@ RSpec.describe Tedium::Runner do
         end
 
         it "deletes the todo file" do
-          expect(File).to receive(:delete).with('.standard_todo.yml')
+          expect(File).to receive(:delete).with(".standard_todo.yml")
           runner.run
         end
       end
@@ -72,8 +72,8 @@ RSpec.describe Tedium::Runner do
 
     context "with a rubocop todo file" do
       before do
-        allow(File).to receive(:exist?).with('.standard_todo.yml').and_return(false)
-        allow(File).to receive(:exist?).with('.rubocop_todo.yml').and_return(true)
+        allow(File).to receive(:exist?).with(".standard_todo.yml").and_return(false)
+        allow(File).to receive(:exist?).with(".rubocop_todo.yml").and_return(true)
         allow(YAML).to receive(:load_file).and_return(standard_todo_content)
       end
 
@@ -86,7 +86,7 @@ RSpec.describe Tedium::Runner do
       end
 
       context "with unsafe autocorrect" do
-        let(:options) { { unsafe_autocorrect: true } }
+        let(:options) { {unsafe_autocorrect: true} }
 
         it "uses the unsafe autocorrect flag" do
           expect(Open3).to receive(:capture3).with(
@@ -99,10 +99,10 @@ RSpec.describe Tedium::Runner do
     end
 
     context "when running tests is enabled" do
-      let(:options) { { run_tests: true } }
+      let(:options) { {run_tests: true} }
 
       before do
-        allow(File).to receive(:exist?).with('.standard_todo.yml').and_return(true)
+        allow(File).to receive(:exist?).with(".standard_todo.yml").and_return(true)
         allow(YAML).to receive(:load_file).and_return(standard_todo_content)
         allow(Open3).to receive(:capture3).and_return(["", "", double(success?: true)])
       end

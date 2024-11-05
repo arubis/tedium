@@ -1,6 +1,6 @@
 module TodoFileHelpers
   def create_standard_todo_file(content)
-    file = Tempfile.new(['.standard_todo', '.yml'])
+    file = Tempfile.new([".standard_todo", ".yml"])
     file.write(content.to_yaml)
     file.close
     file

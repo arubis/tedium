@@ -1,0 +1,4 @@
+inherit_gem:
+  standard: config/base.yml
+require: rubocop-rake
+require: rubocop-rspec

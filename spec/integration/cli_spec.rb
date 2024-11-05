@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe "CLI", type: :integration do
   let(:cli) { Tedium::CLI.new }

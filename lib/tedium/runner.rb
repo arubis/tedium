@@ -1,10 +1,10 @@
-require 'open3'
+require "open3"
 
 module Tedium
   class Runner
     TODO_FILES = [
-      '.standard_todo.yml',
-      '.rubocop_todo.yml'
+      ".standard_todo.yml",
+      ".rubocop_todo.yml"
     ].freeze
 
     def self.run(options = {})
@@ -17,10 +17,10 @@ module Tedium
 
     def run
       todo_file = find_todo_file
-      return puts 'No todo files found' unless todo_file
+      return puts "No todo files found" unless todo_file
 
       yaml_content = YAML.load_file(todo_file)
-      return puts "No ignore rules found in #{todo_file}" unless yaml_content&.dig('ignore')
+      return puts "No ignore rules found in #{todo_file}" unless yaml_content&.dig("ignore")
 
       process_todo_file(todo_file, yaml_content)
     end
@@ -32,11 +32,11 @@ module Tedium
     end
 
     def process_todo_file(todo_file, yaml_content)
-      is_standard = todo_file == '.standard_todo.yml'
-      ignore_entries = yaml_content['ignore']
+      is_standard = todo_file == ".standard_todo.yml"
+      ignore_entries = yaml_content["ignore"]
 
       file_entry = ignore_entries.sample
-      return puts 'No files to process' unless file_entry
+      return puts "No files to process" unless file_entry
 
       file_path = file_entry.keys.first
       rules = file_entry[file_path]
@@ -62,23 +62,23 @@ module Tedium
 
     def run_linter(file_path, is_standard)
       unsafe_flag = if @options[:unsafe_autocorrect]
-                      (is_standard ? '--fix-unsafely' : '-A')
-                    else
-                      (is_standard ? '--fix' : '-a')
-                    end
+        (is_standard ? "--fix-unsafely" : "-A")
+      else
+        (is_standard ? "--fix" : "-a")
+      end
 
       command = if is_standard
-                  ['bundle', 'exec', 'standardrb', unsafe_flag, file_path]
-                else
-                  ['bundle', 'exec', 'rubocop', unsafe_flag, file_path]
-                end
+        ["bundle", "exec", "standardrb", unsafe_flag, file_path]
+      else
+        ["bundle", "exec", "rubocop", unsafe_flag, file_path]
+      end
 
-      puts "\nRunning: #{command.join(' ')}"
+      puts "\nRunning: #{command.join(" ")}"
 
       stdout, stderr, status = Open3.capture3(*command)
 
       # Filter out the ignored files warning but keep other stderr messages
-      filtered_stderr = stderr.lines.reject { |line| line.include?('Ignored files:') }.join
+      filtered_stderr = stderr.lines.reject { |line| line.include?("Ignored files:") }.join
 
       # Print any remaining stderr messages that might be important
       puts filtered_stderr unless filtered_stderr.empty?
@@ -86,12 +86,12 @@ module Tedium
       if status.success?
         puts "\nLinting completed successfully!"
         if @options[:unsafe_autocorrect]
-          puts 'WARNING: Unsafe autocorrections were allowed. Please review changes carefully.'
-          puts 'Running your test suite is highly recommended.' unless @options[:run_tests]
+          puts "WARNING: Unsafe autocorrections were allowed. Please review changes carefully."
+          puts "Running your test suite is highly recommended." unless @options[:run_tests]
         end
       else
         puts "\nLinting completed with some errors."
-        puts 'Some issues may require manual intervention.'
+        puts "Some issues may require manual intervention."
         # Show stdout in case of errors, as it might contain useful information
         puts stdout unless stdout.empty?
       end
@@ -101,10 +101,10 @@ module Tedium
 
     def run_tests
       puts "\nRunning test suite..."
-      if system('bundle exec rake test')
-        puts 'Test suite passed!'
+      if system("bundle exec rake test")
+        puts "Test suite passed!"
       else
-        puts 'Test suite failed! Please review the changes and fix any issues.'
+        puts "Test suite failed! Please review the changes and fix any issues."
       end
     end
   end

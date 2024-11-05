@@ -12,12 +12,18 @@ RSpec.describe "CLI", type: :integration do
 
   describe "option parsing" do
     it "accepts --unsafe-autocorrect" do
-      expect(Tedium::Runner).to receive(:run).with(hash_including(unsafe_autocorrect: true))
+      runner_spy = class_spy(Tedium::Runner)
+      stub_const("Tedium::Runner", runner_spy)
+      run_cli(["--unsafe-autocorrect"])
+      expect(runner_spy).to have_received(:run).with(hash_including(unsafe_autocorrect: true))
       run_cli(["--unsafe-autocorrect"])
     end
 
     it "accepts --run-tests" do
-      expect(Tedium::Runner).to receive(:run).with(hash_including(run_tests: true))
+      runner_spy = class_spy(Tedium::Runner)
+      stub_const("Tedium::Runner", runner_spy)
+      run_cli(["--run-tests"])
+      expect(runner_spy).to have_received(:run).with(hash_including(run_tests: true))
       run_cli(["--run-tests"])
     end
 

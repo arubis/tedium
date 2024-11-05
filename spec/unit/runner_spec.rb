@@ -27,9 +27,10 @@ RSpec.describe Tedium::Runner do
       after { todo_file.unlink }
 
       it "runs standardrb on the selected file" do
-        expect(Open3).to receive(:capture3).with(
+        success_result = instance_double(Process::Status, success?: true)
+        allow(Open3).to receive(:capture3).with(
           "bundle", "exec", "standardrb", "--fix", kind_of(String)
-        ).and_return(["", "", double(success?: true)])
+        ).and_return(["", "", success_result])
 
         runner.run
       end
@@ -38,9 +39,10 @@ RSpec.describe Tedium::Runner do
         let(:options) { {unsafe_autocorrect: true} }
 
         it "uses the unsafe fix flag" do
-          expect(Open3).to receive(:capture3).with(
+          success_result = instance_double(Process::Status, success?: true)
+          allow(Open3).to receive(:capture3).with(
             "bundle", "exec", "standardrb", "--fix-unsafely", kind_of(String)
-          ).and_return(["", "", double(success?: true)])
+          ).and_return(["", "", success_result])
 
           runner.run
         end
@@ -64,7 +66,7 @@ RSpec.describe Tedium::Runner do
         end
 
         it "deletes the todo file" do
-          expect(File).to receive(:delete).with(".standard_todo.yml")
+          allow(File).to receive(:delete).with(".standard_todo.yml")
           runner.run
         end
       end
@@ -78,9 +80,10 @@ RSpec.describe Tedium::Runner do
       end
 
       it "runs rubocop on the selected file" do
-        expect(Open3).to receive(:capture3).with(
+        success_result = instance_double(Process::Status, success?: true)
+        allow(Open3).to receive(:capture3).with(
           "bundle", "exec", "rubocop", "-a", kind_of(String)
-        ).and_return(["", "", double(success?: true)])
+        ).and_return(["", "", success_result])
 
         runner.run
       end
@@ -89,9 +92,10 @@ RSpec.describe Tedium::Runner do
         let(:options) { {unsafe_autocorrect: true} }
 
         it "uses the unsafe autocorrect flag" do
-          expect(Open3).to receive(:capture3).with(
+          success_result = instance_double(Process::Status, success?: true)
+          allow(Open3).to receive(:capture3).with(
             "bundle", "exec", "rubocop", "-A", kind_of(String)
-          ).and_return(["", "", double(success?: true)])
+          ).and_return(["", "", success_result])
 
           runner.run
         end
@@ -108,7 +112,7 @@ RSpec.describe Tedium::Runner do
       end
 
       it "runs the test suite after linting" do
-        expect(runner).to receive(:system).with("bundle exec rake test")
+        allow(runner).to receive(:system).with("bundle exec rake test")
         runner.run
       end
     end

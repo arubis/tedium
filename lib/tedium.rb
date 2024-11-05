@@ -3,8 +3,7 @@ require 'pathname'
 require 'open3'
 
 module Tedium
+  autoload :CLI, 'tedium/cli'
+  autoload :Runner, 'tedium/runner'
+  autoload :VERSION, 'tedium/version'
 end
-
-require_relative "tedium/version"
-require_relative "tedium/cli"
-require_relative "tedium/runner"

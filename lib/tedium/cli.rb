@@ -1,4 +1,4 @@
-require 'optparse'
+require "optparse"
 
 module Tedium
   class CLI

@@ -1,18 +1,18 @@
 Gem::Specification.new do |spec|
-  spec.name        = "tedium"
-  spec.version     = "0.1.0"
-  spec.authors     = ["Dylan Fitzgerald"]
-  spec.email       = ["dylan@dylanfitzgerald.net"]
-  spec.summary     = "Gradually removes StandardRB and RuboCop todo entries"
+  spec.name = "tedium"
+  spec.version = "0.1.0"
+  spec.authors = ["Dylan Fitzgerald"]
+  spec.email = ["dylan@dylanfitzgerald.net"]
+  spec.summary = "Gradually removes StandardRB and RuboCop todo entries"
   spec.description = "A tool to help gradually eliminate technical debt by removing one linting exclusion at a time"
-  spec.homepage    = "https://github.com/arubis/tedium"
-  spec.license     = "MIT"
+  spec.homepage = "https://github.com/arubis/tedium"
+  spec.license = "MIT"
 
-  spec.files         = Dir["lib/**/*", "README.md", "exe/*"]
-  spec.bindir        = "exe"
-  spec.executables   = ["tedium"]
+  spec.files = Dir["lib/**/*", "README.md", "exe/*"]
+  spec.bindir = "exe"
+  spec.executables = ["tedium"]
   spec.require_paths = ["lib"]
-  spec.metadata      = {
+  spec.metadata = {
     "allowed_push_host" => "https://rubygems.org",
     "rubygems_mfa_required" => "true"
   }

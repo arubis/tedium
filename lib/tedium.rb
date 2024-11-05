@@ -1,5 +1,6 @@
 require 'yaml'
 require 'pathname'
+require_relative 'tedium/cli'
 
 module Tedium
   class Error < StandardError; end

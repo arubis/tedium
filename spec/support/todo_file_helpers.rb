@@ -1,9 +1,12 @@
 module TodoFileHelpers
   def create_standard_todo_file(content)
-    file = Tempfile.new([".standard_todo", ".yml"])
-    file.write(content.to_yaml)
-    file.close
-    file
+    File.write(".standard_todo.yml", content.to_yaml)
+    ".standard_todo.yml"
+  end
+
+  def create_rubocop_todo_file(content)
+    File.write(".rubocop_todo.yml", content.to_yaml)
+    ".rubocop_todo.yml"
   end
 
   def standard_todo_content

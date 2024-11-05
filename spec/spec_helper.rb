@@ -26,4 +26,9 @@ RSpec.configure do |config|
 
   config.order = :random
   Kernel.srand config.seed
+
+  config.after(:each) do
+    FileUtils.rm_f(".rubocop_todo.yml")
+    FileUtils.rm_f(".standard_todo.yml")
+  end
 end

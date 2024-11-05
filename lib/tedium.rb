@@ -1,9 +1,8 @@
-require 'yaml'
-require 'pathname'
-require 'open3'
-
 module Tedium
-  autoload :CLI, 'tedium/cli'
-  autoload :Runner, 'tedium/runner'
-  autoload :VERSION, 'tedium/version'
+  # Define the module here first
 end
+
+# Then require all the parts
+require "tedium/version"
+require "tedium/runner"
+require "tedium/cli"

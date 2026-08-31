@@ -46,3 +46,6 @@ The binstub will ensure the correct gem version is used based on your Gemfile.lo
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/arubis/tedium.
+
+
+<!-- Security scan triggered at 2026-08-31 17:00:42 -->

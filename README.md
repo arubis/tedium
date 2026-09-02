@@ -49,3 +49,5 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/arubis
 
 
 <!-- Security scan triggered at 2026-08-31 17:00:42 -->
+
+<!-- Security scan triggered at 2026-09-02 06:56:22 -->
